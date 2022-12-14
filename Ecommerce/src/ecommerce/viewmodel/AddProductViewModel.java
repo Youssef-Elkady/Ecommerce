@@ -40,12 +40,12 @@ public class AddProductViewModel {
         try {
            
             productsArrayList = vpvm.getAllProducts();
-            boolean serialNumberValidation = isIdUnique(id, productsArrayList);
-            if (serialNumberValidation == true) {
+            boolean idValidation = isIdUnique(id, productsArrayList);
+            if (idValidation == true) {
                 insertProduct( name, price, id);
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "SerialNumber must be unique");
+                JOptionPane.showMessageDialog(null, "id must be unique");
                 return false;
             }
         } catch (SQLException ex) {

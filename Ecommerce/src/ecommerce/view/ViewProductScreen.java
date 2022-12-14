@@ -23,25 +23,9 @@ public class ViewProductScreen extends javax.swing.JFrame implements Node {
         initComponents();
         ArrayList<ProductItem> productsArrayList = new ArrayList<>();
         ViewProductViewModel v = new ViewProductViewModel();
-        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
-        String name;
-        BigDecimal price;
-        int id;
-        try {
-            productsArrayList = v.getAllProducts();
-            for (int i = 0; i < productsArrayList.size(); i++) {
-                name = productsArrayList.get(i).getName();
-                price = (BigDecimal)productsArrayList.get(i).getPrice();
-                id = productsArrayList.get(i).getId();
-
-                int num = id;
-                String pric =""+price ;
-                Object data[] = {num,name, pric};
-                t.addRow(data);
-            }
-        } catch (SQLException ex) {
-            System.out.println("ERROR");
-        }
+        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();     
+                v.DisplayAllProducts(jTable1);
+  
     }
 
     @SuppressWarnings("unchecked")
