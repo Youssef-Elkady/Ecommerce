@@ -17,20 +17,18 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 public class ViewProductScreen extends javax.swing.JFrame implements Node {
-    private Connection con;
     private Node parent;
 
-    public ViewProductScreen(Connection con) {
+    public ViewProductScreen() throws SQLException {
         initComponents();
-        this.con=con;
         ArrayList<ProductItem> productsArrayList = new ArrayList<>();
-        ViewProductViewModel v = new ViewProductViewModel(con);
+        ViewProductViewModel v = new ViewProductViewModel();
         DefaultTableModel t = (DefaultTableModel) jTable1.getModel();
         String name;
         BigDecimal price;
         int id;
         try {
-            productsArrayList = v.getAllProducts(con);
+            productsArrayList = v.getAllProducts();
             for (int i = 0; i < productsArrayList.size(); i++) {
                 name = productsArrayList.get(i).getName();
                 price = (BigDecimal)productsArrayList.get(i).getPrice();

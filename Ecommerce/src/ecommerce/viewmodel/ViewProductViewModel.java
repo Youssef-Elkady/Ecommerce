@@ -13,13 +13,12 @@ public class ViewProductViewModel {
 
     private Connection con;
 
-    public ViewProductViewModel(Connection con) {
-        this.con = con;
+    public ViewProductViewModel() throws SQLException {
+       con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db","root","IDKWHYUWANTIT123");
     }
 
-    public ArrayList<ProductItem> getAllProducts(Connection con) throws SQLException {
+    public ArrayList<ProductItem> getAllProducts() throws SQLException {
         ArrayList<ProductItem> productsArrayList = new ArrayList<>();
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db","root","IDKWHYUWANTIT123");
         Statement statement = con.createStatement();
         ResultSet rs = statement.executeQuery("select * from products");
         while (rs.next()) {

@@ -1,5 +1,6 @@
 package ecommerce.view;
 import ecommerce.model.Node;
+import ecommerce.viewmodel.HomePageViewModel;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,8 +11,7 @@ import java.util.logging.Logger;
 
 
 public class HomePage extends javax.swing.JFrame implements Node {
-    private Connection con;
-    private static HomePage H=new HomePage();
+    private static HomePageViewModel H=new HomePageViewModel();
     private Node parent;
     public HomePage() {
         initComponents();
@@ -84,38 +84,24 @@ public class HomePage extends javax.swing.JFrame implements Node {
 
     private void AddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddProductActionPerformed
         this.setVisible(false);
-        AddProductScreen a1= new AddProductScreen(con);
+        AddProductScreen a1= new AddProductScreen();
         a1.setParentNode(this);
         a1.setVisible(true);
         
     }//GEN-LAST:event_AddProductActionPerformed
 
     private void ViewProductsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewProductsActionPerformed
-        this.setVisible(false);
-        ViewProductScreen v1= new ViewProductScreen(con);
-        v1.setParentNode(this);
-        v1.setVisible(true);
+        try {
+            this.setVisible(false);
+            ViewProductScreen v1= new ViewProductScreen();
+            v1.setParentNode(this);
+            v1.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ViewProductsActionPerformed
 
-    public void createConnection () throws SQLException {
-        try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db","root","IDKWHYUWANTIT123");
-            System.out.println("connected");
-            Statement stmt = con.createStatement();
-
-        }catch(SQLException ex)
-        {
-            System.out.println("not found driver");
-        }
-        // validation serial, 
-    }
-   public   void createTable () throws SQLException{
-       Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db","root","IDKWHYUWANTIT123");
-       //id,name,price
-       String t = "CREATE TABLE IF NOT EXISTS Products" + "("+ "id int PRIMARY KEY,"+ "name varchar(25),"+ "price float"+ ");";        
-        Statement statement = con.createStatement();
-        statement.executeUpdate(t);
-   }
+ 
     
     public static void main(String args[]) {
 
@@ -123,7 +109,7 @@ public class HomePage extends javax.swing.JFrame implements Node {
             public void run() {
                 try {
                     H.createConnection();
-                   H.createTable();
+                    H.createTable();
                 } catch (SQLException ex) {
                     Logger.getLogger(HomePage.class.getName()).log(Level.SEVERE, null, ex);
                 }

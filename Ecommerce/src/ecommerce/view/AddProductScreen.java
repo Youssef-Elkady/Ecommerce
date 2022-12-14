@@ -14,11 +14,9 @@ import java.sql.DriverManager;
 import javax.swing.JFrame;
 
 public class AddProductScreen extends javax.swing.JFrame implements Node {
-    private Connection con;
     private Node parent;
 
-    public AddProductScreen(Connection con) {
-        this.con=con;
+    public AddProductScreen() {
         initComponents();
     }
 
@@ -149,7 +147,7 @@ public class AddProductScreen extends javax.swing.JFrame implements Node {
         int id = Integer.parseInt(ID.getText());
         AddProductViewModel a;
         try {
-            a = new AddProductViewModel(con);
+            a = new AddProductViewModel();
              a.insertProduct( n, p, id);
         } catch (SQLException ex) {
             Logger.getLogger(AddProductScreen.class.getName()).log(Level.SEVERE, null, ex);

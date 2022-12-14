@@ -18,11 +18,11 @@ public class AddProductViewModel {
 
     private Connection con;
 
-    public AddProductViewModel(Connection con) throws SQLException {
+    public AddProductViewModel() throws SQLException {
         this.con =DriverManager.getConnection("jdbc:mysql://localhost:3306/db","root","IDKWHYUWANTIT123");
     }
 
-    private ViewProductViewModel vpvm = new ViewProductViewModel(con);
+    private ViewProductViewModel vpvm = new ViewProductViewModel();
 
     public void insertProduct( String name, double price, int Id) throws SQLException {
         String InsertProductQuery = "INSERT INTO products(name, price, id) VALUES (?,?,?)";
@@ -39,7 +39,7 @@ public class AddProductViewModel {
         
         try {
            
-            productsArrayList = vpvm.getAllProducts(con);
+            productsArrayList = vpvm.getAllProducts();
             boolean serialNumberValidation = isIdUnique(id, productsArrayList);
             if (serialNumberValidation == true) {
                 insertProduct( name, price, id);
