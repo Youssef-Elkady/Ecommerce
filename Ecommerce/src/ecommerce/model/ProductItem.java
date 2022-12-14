@@ -18,7 +18,7 @@ public class ProductItem  {
     private int id;
     private Connection con;
     //picture
-
+//hi
     public ProductItem(Connection con, int Id, String name, BigDecimal price ) {
         this.name = name;
         this.price = price;
