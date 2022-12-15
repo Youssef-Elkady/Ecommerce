@@ -21,9 +21,9 @@ public class ViewProductScreen extends javax.swing.JFrame implements Node {
 
     public ViewProductScreen() throws SQLException {
         initComponents();
-        ArrayList<ProductItem> productsArrayList = new ArrayList<>();
+        //ArrayList<ProductItem> productsArrayList = new ArrayList<>();
         ViewProductViewModel v = new ViewProductViewModel();
-        DefaultTableModel t = (DefaultTableModel) jTable1.getModel();     
+        //DefaultTableModel t = (DefaultTableModel) jTable1.getModel();  
                 v.DisplayAllProducts(jTable1);
   
     }

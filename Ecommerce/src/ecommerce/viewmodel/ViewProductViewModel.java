@@ -15,13 +15,14 @@ import javax.swing.table.DefaultTableModel;
 public class ViewProductViewModel {
 
     private Connection con;
+    ArrayList<ProductItem> productsArrayList = new ArrayList<>();
 
     public ViewProductViewModel() throws SQLException {
        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/db","root","IDKWHYUWANTIT123");
     }
+    
 
     public ArrayList<ProductItem> getAllProducts() throws SQLException {
-        ArrayList<ProductItem> productsArrayList = new ArrayList<>();
         Statement statement = con.createStatement();
         ResultSet rs = statement.executeQuery("select * from products");
         while (rs.next()) {
@@ -31,7 +32,6 @@ public class ViewProductViewModel {
         return productsArrayList;
     }
     public void DisplayAllProducts (JTable t1) throws SQLException{
-        ArrayList<ProductItem> productsArrayList = new ArrayList<>();
         productsArrayList = getAllProducts();
         String name;     
         BigDecimal price;
@@ -42,9 +42,7 @@ public class ViewProductViewModel {
                 price = (BigDecimal)productsArrayList.get(i).getPrice();
                 id = productsArrayList.get(i).getId();
 
-                int num = id;
-                String pric =""+price ;
-                Object data[] = {num,name,pric};
+                Object data[] = {id,name,price};
                 t.addRow(data);
                 
             }

@@ -19,12 +19,13 @@ public class AddProductViewModel {
     private Connection con;
 
     public AddProductViewModel() throws SQLException {
-        this.con =DriverManager.getConnection("jdbc:mysql://localhost:3306/db","root","IDKWHYUWANTIT123");
+        this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "root", "IDKWHYUWANTIT123");
     }
 
     private ViewProductViewModel vpvm = new ViewProductViewModel();
+    ArrayList<ProductItem> productsArrayList = new ArrayList<>();
 
-    public void insertProduct( String name, double price, int Id) throws SQLException {
+    public void insertProduct(String name, double price, int Id) throws SQLException {
         String InsertProductQuery = "INSERT INTO products(name, price, id) VALUES (?,?,?)";
         PreparedStatement ps = con.prepareStatement(InsertProductQuery);
         ps.setString(1, name);
@@ -33,28 +34,36 @@ public class AddProductViewModel {
         ps.executeUpdate();
     }
 
-    public boolean validateThenAdd(String name, double price, int id) throws SQLException {
-        ArrayList<ProductItem> productsArrayList = new ArrayList<>();
+    public boolean validateThenAdd(String name, String price, String id) throws SQLException {
 
-        
+        double p = 0;
+        int ID = 0;
         try {
-           
+
+            p = Double.parseDouble(price);
+            ID = Integer.parseInt(id);
+
             productsArrayList = vpvm.getAllProducts();
-            boolean idValidation = isIdUnique(id, productsArrayList);
-            if (idValidation == true) {
-                insertProduct( name, price, id);
-                return true;
-            } else {
+            boolean idValidation = isIdUnique(ID);
+            if (idValidation == false) {
                 JOptionPane.showMessageDialog(null, "id must be unique");
+                return false;
+            }
+            if (p <= 0.0) {
+                JOptionPane.showMessageDialog(null, "Price must be greater than 0!");
                 return false;
             }
         } catch (SQLException ex) {
             Logger.getLogger(AddProductViewModel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Number fields cannot contain characters!");
+            return false;
         }
+        insertProduct(name, p, ID);
         return true;
     }
 
-    public boolean isIdUnique(int id, ArrayList<ProductItem> productsArrayList) {
+    public boolean isIdUnique(int id) {
         for (int i = 0; i < productsArrayList.size(); i++) {
             if (id == productsArrayList.get(i).getId()) {
                 return false;

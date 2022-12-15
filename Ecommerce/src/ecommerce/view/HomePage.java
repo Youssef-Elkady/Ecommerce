@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 
 public class HomePage extends javax.swing.JFrame implements Node {
-    private static HomePageViewModel H=new HomePageViewModel();
+    private static HomePageViewModel H = new HomePageViewModel();
     private Node parent;
     public HomePage() {
         initComponents();

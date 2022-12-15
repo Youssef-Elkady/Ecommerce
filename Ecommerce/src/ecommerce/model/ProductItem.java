@@ -16,19 +16,19 @@ public class ProductItem  {
     private String name;
     private BigDecimal price;
     private int id;
-    private Connection con;
+    //private Connection con;
     //picture
 //hi
-    public ProductItem(Connection con, int Id, String name, BigDecimal price ) {
-        this.name = name;
-        this.price = price;
-        this.id = Id;
-        this.con = con;
-    }
+//    public ProductItem(Connection con, int Id, String name, BigDecimal price ) {
+//        this.name = name;
+//        this.price = price;
+//        this.id = Id;
+//        this.con = con;
+//    }
     
-      public Connection getCon() {
-        return con;
-    }
+//      public Connection getCon() {
+//        return con;
+//    }
 
     public String getName() {
         return name;
@@ -55,9 +55,9 @@ public class ProductItem  {
     }
 
 
-    public void setCon(Connection con) {
-        this.con = con;
-    }
+//    public void setCon(Connection con) {
+//        this.con = con;
+//    }
     public ProductItem() {
     }
 

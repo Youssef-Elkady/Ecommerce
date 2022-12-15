@@ -12,8 +12,10 @@ import ecommerce.model.ProductItem;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class AddProductScreen extends javax.swing.JFrame implements Node {
+
     private Node parent;
 
     public AddProductScreen() {
@@ -143,17 +145,29 @@ public class AddProductScreen extends javax.swing.JFrame implements Node {
 
     private void AddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddProductActionPerformed
         String n = name.getText();
-        double p = Double.parseDouble(price.getText());
-        int id = Integer.parseInt(ID.getText());
+        String p = price.getText();
+        String id = ID.getText();
+
         AddProductViewModel a;
-        try {
-            a = new AddProductViewModel();
-             a.insertProduct( n, p, id);
-        } catch (SQLException ex) {
-            Logger.getLogger(AddProductScreen.class.getName()).log(Level.SEVERE, null, ex);
+        boolean flag = false;
+        if (n.equals("") || p.equals("") || id.equals("")) {
+            JOptionPane.showMessageDialog(null, "Empty field(s)!");
+        } else {
+            try {
+                a = new AddProductViewModel();
+                flag = a.validateThenAdd(n, p, id);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(AddProductScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        this.setVisible(false);
-        ((JFrame)this.getParentNode()).setVisible(true);
+
+        if (flag) {
+            JOptionPane.showMessageDialog(null, "Product successully added!");
+            this.setVisible(false);
+            ((JFrame) this.getParentNode()).setVisible(true);
+        }
+
     }//GEN-LAST:event_AddProductActionPerformed
 
     private void BrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BrowseActionPerformed
@@ -167,7 +181,7 @@ public class AddProductScreen extends javax.swing.JFrame implements Node {
         if (parent != null)
             parent.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddProduct;
@@ -182,13 +196,13 @@ public class AddProductScreen extends javax.swing.JFrame implements Node {
     private javax.swing.JTextField price;
     // End of variables declaration//GEN-END:variables
 
-        @Override
-        public Node getParentNode() {
-            return parent;
-        }
-
-        @Override
-        public void setParentNode(Node node) {
-            this.parent = node;
-        }
+    @Override
+    public Node getParentNode() {
+        return parent;
     }
+
+    @Override
+    public void setParentNode(Node node) {
+        this.parent = node;
+    }
+}
